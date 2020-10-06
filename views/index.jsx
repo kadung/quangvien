@@ -1,7 +1,7 @@
-var React = require('react');
+import React from 'react';
 
-function HelloMessage() {
-  return <div>Hello Dung</div>;
+const HomePage = (props) => {
+  return <div>{props.title}</div>;
 }
 
-module.exports = HelloMessage;
+export default  HomePage;

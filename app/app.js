@@ -3,14 +3,12 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const { GoogleSpreadsheet } = require('google-spreadsheet');
+const fetchSpreadSheetProducts = require('./services/fetch-spreadsheet-products');
 
 let app = express();
 
 // google-spreadsheet setup
-
-
-app.locals.name = "Dukie";
+fetchSpreadSheetProducts().then(data => app.locals.products = data);
 
 // view engine setup
 app.set('views', __dirname + '/views');

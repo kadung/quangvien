@@ -3,23 +3,23 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const fetchSpreadSheetProducts = require('./services/fetch-spreadsheet-products');
+const fetchSpreadSheet = require('./services/google-spreadsheet');
 
 let app = express();
 
 // google-spreadsheet setup
-fetchSpreadSheetProducts().then(data => app.locals.products = data);
+fetchSpreadSheet.fetchCategories().then(data => app.locals.categories = data);
+fetchSpreadSheet.fetchProducts().then(data => app.locals.products = data);
 
 // view engine setup
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jsx');
-app.engine('jsx', require('express-react-views').createEngine());
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 //  routes setup
 app.use('/', require('./routes/index'));

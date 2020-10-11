@@ -1,0 +1,8 @@
+<h1 class="my-4">Danh mục:</h1>
+<div class="list-group">
+    <% categories.forEach((category) => { %>
+    <a href="/danh-muc/<%= category.id %>" class="list-group-item">
+        <%= category.name %>
+    </a>
+    <% }); %>
+</div>

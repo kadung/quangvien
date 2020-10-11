@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head -->
+<%- include('partial/head'); -%>
+
+<body>
+
+  <!-- Navigation Header -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Cửa hàng ốc vít</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active" >
+            <a class="nav-link" href="/">Trang Chủ
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/gioi-thieu">Giới Thiệu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/lien-he">Liên hệ</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <%- include('partial/left-sidebar', { categories: categories }); -%>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+        <h2 my-4>Danh mục <%= currentCategory.name %>:</h2>
+        <%- include('partial/product-list', { products: products }); -%>
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <%- include('partial/footer'); -%>
+
+</body>
+
+</html>

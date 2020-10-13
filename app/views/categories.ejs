@@ -9,7 +9,7 @@
   <!-- Navigation Header -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Cửa hàng ốc vít</a>
+      <a class="navbar-brand" href="/">Cửa hàng ốc vít</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -42,8 +42,9 @@
       </div>
       <!-- /.col-lg-3 -->
 
-      <div class="col-lg-9">
-        <h2 my-4>Danh mục <%= currentCategory.name %>:</h2>
+      <div class="col-lg-9 pt-4">
+
+        <h2 class="pb-3">Sản phẩm trong danh mục <%= currentCategory.name %>:</h2>
         <%- include('partial/product-list', { products: products }); -%>
 
       </div>

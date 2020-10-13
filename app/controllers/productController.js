@@ -1,8 +1,9 @@
 exports.productDetail = (req, res, next) => {
+    console.log(req.app.locals.categories);
     const productId = req.params.productId;
     const product = req.app.locals.products.find(product => product.id == productId);
     console.log(product);
-
+    
     res.render(
         'product-detail',
         {

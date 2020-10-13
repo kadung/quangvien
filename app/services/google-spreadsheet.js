@@ -21,8 +21,9 @@ module.exports.fetchProducts = async () => {
             name: product[1],
             description: product[2],
             categoryId: product[3],
-            images: product[4].split(','),
-            isAtHomePage: product[5] ? true : false
+            imagesCard: product[4],
+            imagesDetail: product[5].split(','),
+            isAtHomePage: product[6] ? true : false
         };
     })
 }

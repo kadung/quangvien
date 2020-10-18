@@ -86,15 +86,29 @@
         </div>
 
           <div class="card-body">
-            <h3 class="card-title"><%= product.name %></h3>
-            <div>
-              <input type="text" placeholder="Nhập SĐT cần tư vấn ">
-              <input type="button" class="btn btn-primary" value="Gửi">
+            <div class="d-flex justify-content-center">
+              <form method="post" id="callback-form" class="form-inline ">
+                <div class="form-group mx-sm-3 mb-2">
+                  <input type="number" class="form-control" id="phone-number" placeholder="Nhập SĐT cần tư vấn">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Gửi ngay</button>
+                <br>
+              </form>              
             </div>
-            
+            <p id="error-number" class="d-none text-center p-3 mb-2 bg-danger text-white">
+              Số điện thoại không đúng vui lòng kiểm tra lại.
+            </p>
+            <p id="fail-call" class="d-none text-center p-3 mb-2 bg-danger text-white">
+              Đường truyền gặp sự cố, xin hãy thử lại.
+            </p>
+            <p id="success-call" class="d-none text-center p-3 mb-2 bg-success text-white">
+              Chúng tôi sẽ gọi bạn.
+            </p>
+
+            <h3 class="card-title" id="product-name"><%= product.name %></h3>
             <p class="card-text"><%= product.description %></p>
           </div>
-
+          
           <!-- TODO
           <div class="card-footer">
             <h2>Sản phẩm tương tự:</h2>

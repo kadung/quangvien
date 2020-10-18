@@ -1,3 +1,5 @@
+const mailjet = require('../services/mailjet');
+
 const PageSize = 5;
 
 exports.productDetail = (req, res, next) => {
@@ -31,4 +33,24 @@ exports.productCategory = (req, res, next) => {
             products: productsPagination
         }
     );
+}
+
+exports.callBack = async (req, res, next) => {
+    console.log(req.body.phoneNumber);
+    // Save to excel
+
+    // Send email
+    if (!req.body.phoneNumber){
+        return res.send({
+            status: 'Server error',
+            errors: 'No phone number is sent.'
+        })
+    }
+    
+    const mailResult = await mailjet.sendEmail(req.body.phoneNumber);
+    res.send({
+        ...mailResult,
+        errors: ''
+    });
+
 }

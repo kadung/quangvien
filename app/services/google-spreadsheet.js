@@ -28,12 +28,14 @@ module.exports.fetchProducts = async () => {
     })
 }
 
-module.exports.saveData = async () => {
+module.exports.saveData = async (phoneNumber, product) => {
     await doc.useServiceAccountAuth(require('../../excel-serect.json'));
     await doc.loadInfo(); 
+    
     const sheet = doc.sheetsById[293271437];
-    const larryRow = await sheet.addRow({ name: 'Larry Page', email: 'larry@google.com' });
+    const result = await sheet.addRow({ Phone: phoneNumber, Product: product, Date: new Date().toDateString() });
 
+    return result._rawData;
 }
 
 // Private

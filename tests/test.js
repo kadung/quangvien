@@ -1,8 +1,8 @@
-
-const test = require('../app/services/mailjet');
+const mailjet = require('../app/services/mailjet');
+const spreadsheet = require('../app/services/google-spreadsheet');
 
 const testMethod = async () => {
-    let result = await test.sendEmail(123)
+    let result = await spreadsheet.saveData(123456, "Ốc 1");
     console.log(result);
 }
 

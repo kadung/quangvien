@@ -5,6 +5,7 @@ $(document).ready(function(){
   
     $("#callback-form").submit(event => {
       event.preventDefault();   // Prevent form send data.
+      $('#callbackButton').prop('disabled', true);
       $("#error-number").addClass('d-none');
       $("#success-call").addClass('d-none');
       $("#fail-call").addClass("d-none");
@@ -16,7 +17,7 @@ $(document).ready(function(){
           type: "POST",
           data: {
             phoneNumber: $("#phone-number").val(),
-            product: $("#product-name").val()
+            product: $("#product-name").text()
           },
           success: (data) => {
             if(data.status == "success") {
@@ -25,6 +26,7 @@ $(document).ready(function(){
             else{
               $("#fail-call").removeClass("d-none");
             }
+            $('#callbackButton').prop('disabled', false);
           },
           dataType: 'json'
         });

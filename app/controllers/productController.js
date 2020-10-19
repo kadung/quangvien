@@ -1,4 +1,5 @@
 const mailjet = require('../services/mailjet');
+const spreadsheet = require('../services/google-spreadsheet');
 
 const PageSize = 5;
 
@@ -36,9 +37,7 @@ exports.productCategory = (req, res, next) => {
 }
 
 exports.callBack = async (req, res, next) => {
-    console.log(req.body.phoneNumber);
-    // Save to excel
-
+    console.log(req.body);
     // Send email
     if (!req.body.phoneNumber){
         return res.send({
@@ -46,6 +45,9 @@ exports.callBack = async (req, res, next) => {
             errors: 'No phone number is sent.'
         })
     }
+
+    // Save to excel
+    await spreadsheet.saveData(req.body.phoneNumber, req.body.product)
     
     const mailResult = await mailjet.sendEmail(req.body.phoneNumber);
     res.send({

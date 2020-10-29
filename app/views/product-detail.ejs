@@ -44,7 +44,9 @@
 
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item">
+              <a href="/">Trang chủ</a>
+            </li>
             <li class="breadcrumb-item">
               <a href="/danh-muc/<%= product.categoryId %>">
                 <%= categories.find(e => e.id === product.categoryId).name %>

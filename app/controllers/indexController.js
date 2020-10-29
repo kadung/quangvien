@@ -1,4 +1,5 @@
 const fetchSpreadSheet = require('../services/google-spreadsheet');
+const mailjet = require('../services/mailjet');
 
 exports.homepage = (req, res, next) => {
     const products = req.app.locals.products.filter(product => product.isAtHomePage == true);
@@ -20,9 +21,18 @@ exports.contact = (req, res, next) => {
     res.render('contact');
 }
 
-exports.refresh = async (req, res, next) => {
-    req.app.locals.categories = await fetchSpreadSheet("1813434113");
-    req.app.locals.products = await fetchSpreadSheet("0");
+exports.contactPost = async (req, res, next) => {
+    const mailResult = await mailjet.sendContactEmail(req.body);
+    return res.send({
+        ...mailResult,
+        errors: ''
+    });
+    
+}
 
-    res.render('index', { categories: req.app.locals.categories });
+exports.refresh = async (req, res, next) => {
+    req.app.locals.categories = await fetchSpreadSheet.fetchCategories();
+    req.app.locals.products = await fetchSpreadSheet.fetchProducts();
+
+    return res.render('index', { categories: req.app.locals.categories });
 }

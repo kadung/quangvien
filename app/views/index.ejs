@@ -32,15 +32,31 @@
 
   <!-- Page Content -->
   <div class="container">
-
     <div class="row">
 
+      <!-- Left side -->
       <div class="col-lg-3">
         <%- include('partial/left-sidebar', { categories: categories }); -%>
       </div>
-      <!-- /.col-lg-3 -->
 
-      <div class="col-lg-9">
+      <!-- Right side -->
+      <div class="col-lg-9 pt-4">
+
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-10 col-lg-8">
+              <form action="/tim-kiem">
+                  <div class="card-body row no-gutters align-items-center">
+                      <div class="col">
+                          <input class="form-control form-control-lg" type="search" name="q" placeholder="Tên sản phẩm cần tìm">
+                      </div>
+                      <div class="col-auto pl-1">
+                          <button class="btn btn-lg btn-success" type="submit">Tìm kiếm</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <!--end of col-->
+      </div>
 
         <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
           <ol class="carousel-indicators">

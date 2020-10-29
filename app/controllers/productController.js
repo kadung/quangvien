@@ -17,12 +17,13 @@ exports.productDetail = (req, res, next) => {
 }
 
 exports.productCategory = (req, res, next) => {
+    console.log(req.app.locals.categories)
     const {page = 1} = req.query;
     const categoryId = req.params.categoryId;
     const categories = req.app.locals.categories;
     const currentCategory = categories.find(cat => cat.id == categoryId)
     const productsInCategory = req.app.locals.products.filter(product => product.categoryId == categoryId);
-    const productsPagination = productsInCategory.slice((page - 1) * PageSize, page * PageSize);
+    const productsInCategoryPagination = productsInCategory.slice((page - 1) * PageSize, page * PageSize);
 
     res.render(
         'categories', 
@@ -31,13 +32,12 @@ exports.productCategory = (req, res, next) => {
             categories: categories,
             currentPage: page,
             maxPage: Math.ceil(productsInCategory.length / PageSize),
-            products: productsPagination
+            products: productsInCategoryPagination
         }
     );
 }
 
 exports.callBack = async (req, res, next) => {
-    console.log(req.body);
     // Send email
     if (!req.body.phoneNumber){
         return res.send({
@@ -49,10 +49,26 @@ exports.callBack = async (req, res, next) => {
     // Save to excel
     await spreadsheet.saveData(req.body.phoneNumber, req.body.product)
     
-    const mailResult = await mailjet.sendEmail(req.body.phoneNumber);
+    const mailResult = await mailjet.sendCallbackEmail(req.body.phoneNumber);
     res.send({
         ...mailResult,
         errors: ''
     });
+}
 
+exports.search = (req, res, next) => {
+    const {page = 1, q} = req.query;
+    const productsInSearch = req.app.locals.products.filter(product => product.slug.includes(q));
+    const productsPagination = productsInSearch.slice((page - 1) * PageSize, page * PageSize);
+
+    res.render(
+        'search', 
+        {
+            searchKey: q,
+            categories: req.app.locals.categories,
+            currentPage: page,
+            maxPage: Math.ceil(productsInSearch.length / PageSize),
+            products: productsPagination
+        }
+    );
 }

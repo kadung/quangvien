@@ -1,8 +1,5 @@
 $(document).ready(function(){
-    $("#test1234").click(() => {
-      $("#error-number").removeClass("d-none")
-    })
-  
+    // Product-detail
     $("#callback-form").submit(event => {
       event.preventDefault();   // Prevent form send data.
       $('#callbackButton').prop('disabled', true);
@@ -36,6 +33,38 @@ $(document).ready(function(){
       }
     })
     
+    // Contact
+    $("#contact-form").submit(event => {
+      event.preventDefault();   // Prevent form send data.
+
+      $('#contact-submit').prop('disabled', true);
+      $("#contact-error").addClass('d-none');
+      $("#contact-success").addClass('d-none');
+
+      $.ajax({
+        url: "/lien-he/",
+        type: "POST",
+        data: {
+          name: $("#contact-name").val(),
+          phone: $("#contact-phone").val(),
+          email: $("#contact-email").val(),
+          message: $("#contact-message").val(),
+        },
+        success: (data) => {
+          console.log(data)
+          if(data.status == "success") {
+            $("#contact-success").removeClass("d-none");
+            $('#contact-form').trigger("reset");
+          }
+          else{
+            $("#contact-error").removeClass("d-none");
+          }
+          $('#contact-submit').prop('disabled', false);
+        },
+        dataType: 'json'
+      });
+
+    })
 })
 
 const isVietnamesePhoneNumber = (number) => {

@@ -35,14 +35,15 @@
 
     <div class="row">
 
+      <!-- Left side -->
       <div class="col-lg-3">
-
         <%- include('partial/left-sidebar', { categories: categories }); -%>
-
       </div>
-      <!-- /.col-lg-3 -->
-
+      
+      <!-- Right side -->
       <div class="col-lg-9 pt-4">
+        <!-- Search bar -->
+        <%- include('partial/search-bar'); -%>
 
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
@@ -56,22 +57,28 @@
         </nav>
 
         <h2 class="pb-3">Kết quả tìm kiếm cho <%= searchKey %>:</h2>
-        
+        <!-- Show search item -->
         <%- include('partial/product-list', { products: products }); -%>
+        <!-- No product return -->
+        <% if (!products.length) { %>
+          <div>
+            <b>Không tìm thấy sản phẩm tương tự.</b>
+          </div>
+        <% } %>  
         
         <% if (maxPage > 1) { %>
         <nav aria-label="myPagination">
           <ul class="pagination justify-content-center">
             <li class="page-item <%= (currentPage == 1) ? "disabled" : '' %>">
-              <a class="page-link" href="/danh-muc/<%= currentCategory.id %>?page=<%= +currentPage-1 %>">Previous</a>
+              <a class="page-link" href="/tim-kiem?q=<%= searchKey %>&page=<%= +currentPage-1 %>">Previous</a>
             </li>
             <% for (let i=1; i<= maxPage; i++) { %>
             <li class="page-item <%= (currentPage == i) ? "active" : '' %>">
-              <a class="page-link" href="/danh-muc/<%= currentCategory.id %>?page=<%= i %>"> <%= i %> </a>
+              <a class="page-link" href="/tim-kiem?q=<%= searchKey %>&page=<%= i %>"> <%= i %> </a>
             </li>
             <% } %>
             <li class="page-item <%= (currentPage == maxPage) ? "disabled" : '' %>">
-              <a class="page-link" href="/danh-muc/<%= currentCategory.id %>?page=<%= +currentPage+1 %>">Next</a>
+              <a class="page-link" href="/tim-kiem?q=<%= searchKey %>&page=<%= +currentPage+1 %>">Next</a>
             </li>
           </ul>
         </nav>

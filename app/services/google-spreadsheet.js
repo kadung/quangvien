@@ -1,4 +1,5 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+const { stringToSlug } = require('../utils/string-to-slug');
 
 // spreadsheet key is the long id in the sheets URL
 const doc = new GoogleSpreadsheet('1qM8hPrMSsX3MV5igGUCPTvqYpR5DuEDRYkDqkM5-E0Y');
@@ -19,12 +20,12 @@ exports.fetchProducts = async () => {
         return {
             id: product[0],
             name: product[1],
-            slug: string_to_slug(product[1]),
             description: product[2],
             categoryId: product[3],
             imagesCard: product[4],
             imagesDetail: product[5].split(','),
-            isAtHomePage: product[6] ? true : false
+            isAtHomePage: product[6] ? true : false,
+            slug: stringToSlug(product[1])
         };
     })
 }
@@ -50,20 +51,3 @@ const fetchData = async (sheetId) => {
     return rows.map(GoogleSpreadsheetRow => GoogleSpreadsheetRow._rawData);
 }
 
-const string_to_slug = (str) => {
-    str = str.replace(/^\s+|\s+$/g, ''); // trim
-    str = str.toLowerCase();
-  
-    // remove accents, swap ñ for n, etc
-    var from = "àÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬđĐèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆìÌỉỈĩĨíÍịỊòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰỳỲỷỶỹỸýÝỵỴ·/_,:;";
-    var to   = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddeeeeeeeeeeeeeeeeeeeeeeiiiiiiiiiioooooooooooooooooooooooooooooooooouuuuuuuuuuuuuuuuuuuuuuyyyyyyyyyy------";
-    for (var i=0, l=from.length ; i<l ; i++) {
-        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-    }
-
-    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-        .replace(/\s+/g, '-') // collapse whitespace and replace by -
-        .replace(/-+/g, '-'); // collapse dashes
-
-    return str;
-}

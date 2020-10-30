@@ -35,14 +35,15 @@
 
     <div class="row">
 
+      <!-- Left side -->
       <div class="col-lg-3">
-
         <%- include('partial/left-sidebar', { categories: categories }); -%>
-
       </div>
-      <!-- /.col-lg-3 -->
-
+      
+      <!-- Righ side -->
       <div class="col-lg-9 pt-4">
+        <!-- Search bar -->
+        <%- include('partial/search-bar'); -%>
 
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
@@ -57,6 +58,25 @@
 
         <h2 class="pb-3">Sản phẩm trong danh mục <%= currentCategory.name %>:</h2>
         
+        <%- include('partial/product-list', { products: products }); -%>
+        
+        <% if (maxPage > 1) { %>
+        <nav aria-label="myPagination">
+          <ul class="pagination justify-content-center">
+            <li class="page-item <%= (currentPage == 1) ? "disabled" : '' %>">
+              <a class="page-link" href="/danh-muc/<%= currentCategory.id %>?page=<%= +currentPage-1 %>">Previous</a>
+            </li>
+            <% for (let i=1; i<= maxPage; i++) { %>
+            <li class="page-item <%= (currentPage == i) ? "active" : '' %>">
+              <a class="page-link" href="/danh-muc/<%= currentCategory.id %>?page=<%= i %>"> <%= i %> </a>
+            </li>
+            <% } %>
+            <li class="page-item <%= (currentPage == maxPage) ? "disabled" : '' %>">
+              <a class="page-link" href="/danh-muc/<%= currentCategory.id %>?page=<%= +currentPage+1 %>">Next</a>
+            </li>
+          </ul>
+        </nav>
+        <% } %>
 
       </div>
       <!-- /.col-lg-9 -->

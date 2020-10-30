@@ -1,5 +1,6 @@
 const mailjet = require('../services/mailjet');
 const spreadsheet = require('../services/google-spreadsheet');
+const {stringToSlug} = require('../utils/string-to-slug');
 
 const PageSize = 5;
 
@@ -17,7 +18,6 @@ exports.productDetail = (req, res, next) => {
 }
 
 exports.productCategory = (req, res, next) => {
-    console.log(req.app.locals.categories)
     const {page = 1} = req.query;
     const categoryId = req.params.categoryId;
     const categories = req.app.locals.categories;
@@ -58,8 +58,11 @@ exports.callBack = async (req, res, next) => {
 
 exports.search = (req, res, next) => {
     const {page = 1, q} = req.query;
-    const productsInSearch = req.app.locals.products.filter(product => product.slug.includes(q));
+    const slug = stringToSlug(q);
+    const productsInSearch = req.app.locals.products.filter(product => product.slug.includes(slug));
     const productsPagination = productsInSearch.slice((page - 1) * PageSize, page * PageSize);
+
+    console.log(productsPagination);
 
     res.render(
         'search', 
